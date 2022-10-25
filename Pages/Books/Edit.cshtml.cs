@@ -11,7 +11,7 @@ using Voin_Valentin_Lab2.Models;
 
 namespace Voin_Valentin_Lab2.Pages.Books
 {
-    public class EditModel : PageModel
+    public class EditModel :  BookCategoriesPageModel
     {
         private readonly Voin_Valentin_Lab2.Data.Voin_Valentin_Lab2Context _context;
 
@@ -30,14 +30,26 @@ namespace Voin_Valentin_Lab2.Pages.Books
                 return NotFound();
             }
 
-            var book =  await _context.Book.FirstOrDefaultAsync(m => m.ID == id);
+            var book = await _context.Book
+            .Include(b => b.Publisher)
+            .Include(b => b.BookCategories).ThenInclude(b => b.Category)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(m => m.ID == id);
+
             if (book == null)
             {
                 return NotFound();
             }
-            Book = book;
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID","PublisherName");
 
+            Book = book;
+            var authorList = _context.Author.Select(x => new
+            {
+                x.ID,
+                FullName = x.LastName + " " + x.FirstName
+            }
+            );
+            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
+            ViewData["AuthorID"] = new SelectList(authorList, "ID", "FullName");
             return Page();
         }
 

@@ -21,8 +21,15 @@ namespace Voin_Valentin_Lab2.Pages.Books
 
         public IActionResult OnGet()
         {
+            var authorList = _context.Author.Select(x => new
+            {
+                x.ID,
+                FullName = x.LastName + " " + x.FirstName
+            }
+            );
             ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID","PublisherName");
-
+            ViewData["AuthorID"] = new SelectList(authorList, "ID", "FullName");
+            
             return Page();
         }
 
