@@ -28,12 +28,22 @@
             <th>
                 @Html.DisplayNameFor(model => model.Book[0].Author)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].BookCategories)
+            </th>
+
             
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Book) {
-        <tr>
+        @foreach (var item in Model.BookD.Books)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.BookID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -43,14 +53,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PublishingDate)
             </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Publisher.PublisherName)
-                </td>
-                
-                <td>
-                    @Html.DisplayFor(modelItem => item.Author.FirstName)
-                    @Html.DisplayFor(modelItem => item.Author.LastName)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher.PublisherName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.FirstName)
+                @Html.DisplayFor(modelItem => item.Author.LastName)
+            </td>
+            <td>
+                    @{
+                        foreach (var category in item.BookCategories)
+                        {
+                            @category.Category.ID @: @category.Category.CategoryName <br />
+                        }
+                    }
+            </td>
+
                
 
             <td>
