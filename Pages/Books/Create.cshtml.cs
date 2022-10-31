@@ -65,7 +65,7 @@ namespace Voin_Valentin_Lab2.Pages.Books
             {
                 _context.Book.Add(newBook);
                 await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
+                return RedirectToPage("Books/Index");
             }
             PopulateAssignedCategoryData(_context, newBook);
             return Page();
