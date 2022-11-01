@@ -27,7 +27,7 @@ namespace Voin_Valentin_Lab2.Pages.Books
                 FullName = x.LastName + " " + x.FirstName
             }
             );
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID","PublisherName");
+            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
             ViewData["AuthorID"] = new SelectList(authorList, "ID", "FullName");
 
             var book = new Book();
@@ -44,7 +44,7 @@ namespace Voin_Valentin_Lab2.Pages.Books
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync(string[] selectedCategories)
         {
-            var newBook = new Book();
+            var newBook = Book;
             if (selectedCategories != null)
             {
                 newBook.BookCategories = new List<BookCategory>();
@@ -57,7 +57,7 @@ namespace Voin_Valentin_Lab2.Pages.Books
                     newBook.BookCategories.Add(catToAdd);
                 }
             }
-            if (await TryUpdateModelAsync<Book>(
+            /*if (await TryUpdateModelAsync<Book>(
             newBook,
             "Book",
             i => i.Title, i => i.Author,
@@ -65,10 +65,15 @@ namespace Voin_Valentin_Lab2.Pages.Books
             {
                 _context.Book.Add(newBook);
                 await _context.SaveChangesAsync();
-                return RedirectToPage("Books/Index");
-            }
+                return RedirectToPage("./Index");
+            }*/
+
+            _context.Book.Add(newBook);
+            await _context.SaveChangesAsync();
+            return RedirectToPage("./Index");
             PopulateAssignedCategoryData(_context, newBook);
             return Page();
         }
     }
-}
+
+    }
