@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Voin_Valentin_Lab2.Data;
 
@@ -11,9 +12,10 @@ using Voin_Valentin_Lab2.Data;
 namespace Voin_Valentin_Lab2.Migrations
 {
     [DbContext(typeof(Voin_Valentin_Lab2Context))]
-    partial class Voin_Valentin_Lab2ContextModelSnapshot : ModelSnapshot
+    [Migration("20221108125907_BorrowingsPart2")]
+    partial class BorrowingsPart2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
